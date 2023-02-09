@@ -151,8 +151,9 @@ if [ "$IS_LIBRARY" = false ]; then
     fi
 
     git config --unset submodule.target-design/chipyard.update
-    git submodule update --init target-design/chipyard
+    git submodule update --init --remote target-design/chipyard
     cd $RDIR/target-design/chipyard
+    git checkout bc-version-bump
 
     SKIP_TOOLCHAIN_ARG=""
     if [ "$SKIP_TOOLCHAIN" = true ]; then
@@ -238,6 +239,9 @@ if wget -T 1 -t 3 -O /dev/null http://169.254.169.254/; then
     )
 
 fi
+
+cd "$RDIR"
+cp -pr blinded_workloads target-design/chipyard/software/firemarshal/workloads
 
 cd "$RDIR"
 set +e
