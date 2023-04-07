@@ -22,6 +22,8 @@ from mypy_boto3_ec2.service_resource import Instance as EC2InstanceResource
 if TYPE_CHECKING:
     from runtools.firesim_topology_elements import FireSimSwitchNode, FireSimServerNode
 
+import boto3
+
 rootLogger = logging.getLogger()
 
 class Inst(metaclass=abc.ABCMeta):
@@ -521,7 +523,17 @@ class AWSEC2F1(RunFarm):
                     # preventing its use for the isinstance() check
                     assert boto is not None and not isinstance(boto, MockBoto3Instance)
                     instanceids = get_instance_ids_for_instances([boto])
-                    terminate_instances(instanceids, dryrun=False)
+                    ec2_client = boto3.client('ec2')
+                    ins_inf = ec2_client.describe_instances()
+
+                    for reservation in ins_inf['Reservations']:
+                        for ins_cur in reservation['Instances']:
+
+                            # Get instance ID from ec2
+                            ins_cur_id = ins_cur["InstanceId"]
+                        
+                            if ins_cur_id in instanceids:
+                                terminate_instances([ins_cur_id], dryrun=False)
 
 class ExternallyProvisioned(RunFarm):
     """This manages the set of externally provisioned instances. This class doesn't manage
