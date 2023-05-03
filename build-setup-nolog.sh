@@ -153,7 +153,7 @@ if [ "$IS_LIBRARY" = false ]; then
     git config --unset submodule.target-design/chipyard.update
     git submodule update --init --remote target-design/chipyard
     cd $RDIR/target-design/chipyard
-    git checkout bc-version-bump
+    git checkout blinded-multiclient
 
     SKIP_TOOLCHAIN_ARG=""
     if [ "$SKIP_TOOLCHAIN" = true ]; then
