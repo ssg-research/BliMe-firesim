@@ -1,0 +1,31 @@
+diff --git a/generators/chipyard/src/main/scala/config/BoomConfigs.scala b/generators/chipyard/src/main/scala/config/BoomConfigs.scala
+index 9e1f558a..88dd5a08 100644
+--- a/generators/chipyard/src/main/scala/config/BoomConfigs.scala
++++ b/generators/chipyard/src/main/scala/config/BoomConfigs.scala
+@@ -18,6 +18,13 @@ class LargeBoomConfig extends Config(
+   new boom.common.WithNLargeBooms(1) ++                          // large boom config
+   new chipyard.config.AbstractConfig)
+ 
++class Large8BoomGem52Channel4BankConfig extends Config(
++  new boom.common.WithNLarge8BoomsGem5(1) ++
++  new freechips.rocketchip.subsystem.WithNMemoryChannels(2) ++
++  new freechips.rocketchip.subsystem.WithNBanks(4) ++
++  new freechips.rocketchip.subsystem.WithInclusiveCache(capacityKB=256) ++
++  new chipyard.config.AbstractConfig)
++
+ class MegaBoomConfig extends Config(
+   new boom.common.WithNMegaBooms(1) ++                           // mega boom config
+   new chipyard.config.AbstractConfig)
+diff --git a/generators/firechip/src/main/scala/TargetConfigs.scala b/generators/firechip/src/main/scala/TargetConfigs.scala
+index 76a2f114..9de4eaf5 100644
+--- a/generators/firechip/src/main/scala/TargetConfigs.scala
++++ b/generators/firechip/src/main/scala/TargetConfigs.scala
+@@ -56,6 +56,8 @@ class DDR3FCFS extends FCFS16GBQuadRank
+ class DDR3FRFCFS extends FRFCFS16GBQuadRank
+ class DDR3FRFCFSLLC4MB extends FRFCFS16GBQuadRankLLC4MB
+ 
++class With7GBExtMem extends freechips.rocketchip.subsystem.WithExtMemSize((1 << 30) * 7L)
++
+ class WithNIC extends icenet.WithIceNIC(inBufFlits = 8192, ctrlQueueDepth = 64)
+ 
+ // Adds a small/large NVDLA to the system

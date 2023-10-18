@@ -240,6 +240,9 @@ if wget -T 1 -t 3 -O /dev/null http://169.254.169.254/; then
 fi
 
 cd "$RDIR"
+./apply-baseline-config-patches.sh
+
+cd "$RDIR"
 set +e
 ./gen-tags.sh
 set -e
