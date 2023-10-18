@@ -235,6 +235,7 @@ if wget -T 1 -t 3 -O /dev/null http://169.254.169.254/; then
 	cd "$AWSFPGA"
 	bash -c "source ./sdk_setup.sh"
 	bash -c "source ./hdk_setup.sh"
+	git apply $RDIR/aws-fpga-power.patch
     )
 
 fi
